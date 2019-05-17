@@ -13,144 +13,7 @@
       <meta name="format-detection" content="telephone=no">
       <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
       <meta id="wixMobileViewport" name="viewport" content="width=980, user-scalable=yes">
-      <script>
-         // BEAT MESSAGE
-         var wixBiSession = {
-             initialTimestamp: Date.now()
-             , requestId: (function(m) { return m ? m[1] : ''})(document.cookie.match(/requestId=([^;]*)/))
-             , viewerSessionId: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16);})
-             , initialRequestTimestamp: (function() {return performance.timeOrigin ? performance.timeOrigin : Date.now() - performance.now();})()
-             , visitorId: publicModel.sessionInfo.visitorId
-             
-             , is_rollout: 0
-             , is_platform_loaded: 1
-             , dc: '42'
-             , renderType: 'bolt'
-             , wixBoltExclusionReason: ''
-             , wixBoltExclusionReasonMoreInfo: ''
-             , sendBeacon: /(\?|\&)suppressbi\=true(\&|$)/.test(location.search) ?
-                 function() {} :
-                 function(url) {
-                     var sent = false;
-                     try {
-                         sent = navigator.sendBeacon(url);
-                     } catch (e) {}
-                     if (!sent) {
-                         (new Image()).src = url;
-                     }
-                 }
-             , sendBeat: (function () {
-                 var caching, match = document.cookie.match(/ssr-caching="cache.desc=(\w+).(?:varnish=(\w+))?/);
-                 if (!match) {
-                     caching = 'none';
-                 } else if (!match[2]) {
-                     caching = match[1] + ',none';
-                 } else {
-                     caching = match.slice(1).join();
-                 }
-                 var isCached = caching.indexOf("hit") === 0;
-                 var beatUrl = 'https://frog.wix.com/bt?src=29&evid=3'
-                     + '&v=1.2344.0'
-                     + '&msid=7d84bed9-73cf-42e9-ac05-abd99747c7cc'
-                     + '&isp=0'
-                     + '&st=2'
-                     + '&dc=42'
-                     + '&iss=1'
-                     + '&url=' + encodeURIComponent(location.href.replace(/^http(s)?:\/\/(www\.)?/, ''))
-                     + '&is_cached=' + isCached
-                     + '&caching=' + caching;
-                 var referrer = document.referrer;
-                 if (referrer) {
-                     beatUrl += '&ref=' + encodeURIComponent(referrer);
-                 }
-                 match = document.cookie.match(/_wixCIDX=([^;]*)/)
-                 if (match) {
-                     beatUrl += '&client_id=' + match[1];
-                 }
-                 return function(et, name, extra, isPageEvent) {
-                     var tts = '';
-                     if (performance.now) {
-                         tts = '&tts=' + Math.round(performance.now());
-                     }
-                     if (name && performance.mark) {
-                         performance.mark(name + ' (beat ' + et + ')');
-                     }
-                     var ts = et === 1 ? 0 : Date.now() - wixBiSession.initialTimestamp;
-                     extra = extra || ''
-                     if (extra.indexOf('pn=') === -1) {
-                         extra = '&pn=1' + extra
-                     }
-                     if (isPageEvent) {
-                         beatUrl = beatUrl.replace('evid=3', 'evid=5');
-                     }
-                     wixBiSession.sendBeacon(beatUrl
-                         + '&et=' + et
-                         + (name ? '&event_name=' + encodeURIComponent(name) : '')
-                         + '&ts=' + ts + tts
-                         + '&vsi=' + wixBiSession.viewerSessionId
-                         + '&rid=' + wixBiSession.requestId
-                         + '&viewer_name=' + encodeURIComponent(wixBiSession.renderType)
-                         + '&is_rollout=' + wixBiSession.is_rollout
-                         + (wixBiSession.visitorId ? '&vid=' + wixBiSession.visitorId  : '')
-                         + (wixBiSession.siteMemberId ? '&mid=' + wixBiSession.siteMemberId  : '')
-                         + extra
-                     );
-                 }
-             })()
-         };
-         wixBiSession.sendBeat(1, 'Init');
-         // BEAT MESSAGE END
-      </script>
-      <script type="text/javascript">
-         (function(x,e,o,s,n){var a=window.fedops||{};a.apps=a.apps||{};a.apps[x]={startLoadTime:e&&e.now&&e.now()};try{a.sessionId=o.getItem("fedops.logger.sessionId")}catch(x){}a.sessionId=a.sessionId||window.wixBiSession.viewerSessionId;window.fedops=a;var d="//frog.wix.com/bolt-performance?appName="+x+"&src=72&evid=21"+'&dc=42'+"&is_rollout="+wixBiSession.is_rollout+ '&st=2'+ '&isp=0'+"&session_id="+a.sessionId+"&_="+s();if(!!n&&!!n.sendBeacon){n.sendBeacon(d)}else{(new Image).src=d}})('bolt-viewer',window.performance,window.localStorage,Math.random,window.navigator);
-      </script>
-      <meta name="fragment" content="!">
-      <!-- DATA -->
-      <script type="text/javascript">
-         var adData = {};
-         var mobileAdData = {};
-         
-         var usersDomain = "https://users.wix.com/wix-users";
-         
-      </script>
-      <script type="text/javascript">
-         var santaBase = 'https://static.parastorage.com/services/santa/1.7072.2';
-         var boltBase = 'https://static.parastorage.com/services/wix-bolt/1.2344.0';
-      </script>
-      <script>
-         var requirejs = {
-           onNodeCreated: function(node) {
-             var src = node.getAttribute('src');
-             var shouldIgnore = ['googletagmanager.com', 'google-analytics.com', 'googleadservices.com', 'doubleclick.net', 'connect.facebook.net'].some(function (domain) {
-                 return src.indexOf(domain) !== -1;
-             });
-             if (!shouldIgnore) {
-                 node.setAttribute('crossorigin', 'anonymous')
-             }
-           }
-         }
-      </script>
-      <script>
-         window.messageBuffer = [];
-         window.messageHandler = function(event) {messageBuffer.push(event)};
-         window.addEventListener('message', window.messageHandler, false);
-      </script>
-      <script id="sentry">(function(c,t,u,n,p,l,y,z,v){function e(b){if(!w){w=!0;var d=t.getElementsByTagName(u)[0],a=t.createElement(u);a.src=z;a.crossorigin="anonymous";a.addEventListener("load",function(){try{c[n]=q;c[p]=r;var a=c[l],d=a.init;a.init=function(a){for(var b in a)Object.prototype.hasOwnProperty.call(a,b)&&(v[b]=a[b]);d(v)};B(b,a)}catch(A){console.error(A)}});d.parentNode.insertBefore(a,d)}}function B(b,d){try{for(var a=0;a<b.length;a++)if("function"===typeof b[a])b[a]();var f=m.data,g=!1,h=!1;for(a=0;a<f.length;a++)if(f[a].f){h=
-         !0;var e=f[a];!1===g&&"init"!==e.f&&d.init();g=!0;d[e.f].apply(d,e.a)}!1===h&&d.init();var k=c[n],l=c[p];for(a=0;a<f.length;a++)f[a].e&&k?k.apply(c,f[a].e):f[a].p&&l&&l.apply(c,[f[a].p])}catch(C){console.error(C)}}for(var g=!0,x=!1,k=0;k<document.scripts.length;k++)if(-1<document.scripts[k].src.indexOf(y)){g="no"!==document.scripts[k].getAttribute("data-lazy");break}var w=!1,h=[],m=function(b){(b.e||b.p||b.f&&-1<b.f.indexOf("capture")||b.f&&-1<b.f.indexOf("showReportDialog"))&&g&&e(h);m.data.push(b)};
-         m.data=[];c[l]={onLoad:function(b){h.push(b);g&&!x||e(h)},forceLoad:function(){x=!0;g&&setTimeout(function(){e(h)})}};"init addBreadcrumb captureMessage captureException captureEvent configureScope withScope showReportDialog".split(" ").forEach(function(b){c[l][b]=function(){m({f:b,a:arguments})}});var q=c[n];c[n]=function(b,d,a,f,e){m({e:[].slice.call(arguments)});q&&q.apply(c,arguments)};var r=c[p];c[p]=function(b){m({p:b.reason});r&&r.apply(c,arguments)};g||setTimeout(function(){e(h)})})(window,document,
-         "script","onerror","onunhandledrejection","Sentry","8b4e078a51d04e0e9efdf470027f0ec1","https://browser.sentry-cdn.com/4.6.2/bundle.min.js",{"dsn":"https://8b4e078a51d04e0e9efdf470027f0ec1@sentry.wixpress.com/3"});
-      </script>
-      <script async="" data-main="https://static.parastorage.com/services/wix-bolt/1.2344.0/bolt-main/app/main-r.min.js" src="https://static.parastorage.com/unpkg/requirejs-bolt@2.3.6/requirejs.min.js"></script>
-      <script>
-         function polyfillsAreLoaded() {
-           var script = document.createElement('script');
-           script.src = 'https://static.parastorage.com/services/wix-bolt/1.2344.0/bolt-main/app/main-r.min.js';
-           
-           script.setAttribute('crossorigin', 'anonymous')
-           
-           document.head.appendChild(script);
-         }
-      </script>
+     
       <link id="viewerMainStyle" rel="stylesheet" type="text/css" href="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/static/css/viewer.min.css">
       <title>About us | enchanted wave</title>
       <link rel="canonical" href="https://gengx064.wixsite.com/website-1">
@@ -173,17 +36,9 @@
       <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="zepto" src="https://static.parastorage.com/unpkg/zepto@1.2.0/dist/zepto.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="wix-ui-santa/dataRefs.bundle" src="https://static.parastorage.com/unpkg/wix-ui-santa@1.0.797/dist/statics/dataRefs.bundle.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="warmupUtilsLib" src="https://static.parastorage.com/unpkg/santa-core-utils@1.2040.0/dist/warmupUtils.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="image-client-api" src="https://static.parastorage.com/unpkg/image-client-api@1.3338.0/dist/imageClientApi.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="warmupUtils" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/warmupUtils/warmupUtils.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="santa-components-layout" src="https://static.parastorage.com/unpkg/santa-components@1.1241.0/dist/santa-components-layout.prod.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="layout" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/layout/layout.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="create-react-class" src="https://static.parastorage.com/unpkg/santa-bundle@1.456.0/dist/bundle.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="reactDOM" src="https://static.parastorage.com/unpkg/react-dom@16.6.3/umd/react-dom.production.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="react" src="https://static.parastorage.com/unpkg/react@16.6.3/umd/react.production.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="skinUtils" src="https://static.parastorage.com/unpkg/santa-skin-utils@1.1063.0/dist/skin-utils.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="thirdPartyAnalytics" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/thirdPartyAnalytics/thirdPartyAnalytics.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="skins" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/skins/skins.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mobileLayoutUtils" src="https://static.parastorage.com/unpkg/santa-mobile-core@1.722.0/dist/mobileLayoutUtils.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="data-capsule" src="https://static.parastorage.com/unpkg/data-capsule@1.0.83/dist/statics/frame-listener.bundle.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coreUtilsLib" src="https://static.parastorage.com/unpkg/santa-core-utils@1.2040.0/dist/coreUtils.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coreUtils" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/coreUtils/coreUtils.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="wixFreemiumBanner" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/wixFreemiumBanner/wixFreemiumBanner.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tpaComponents" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/tpaComponents/tpaComponents.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="textCommon" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/textCommon/textCommon.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="skinExports" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/skinExports/skinExports.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="santa-components" src="https://static.parastorage.com/unpkg/santa-components@1.1241.0/dist/santa-components.prod.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="pmrpc" src="https://static.parastorage.com/unpkg/pm-rpc@1.0.11/build/pm-rpc.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="imageZoom" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/imageZoom/imageZoom.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="galleriesCommon" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/galleriesCommon/galleriesCommon.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="displayer" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/displayer/displayer.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backgroundCommon" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/backgroundCommon/backgroundCommon.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="componentsCore" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/componentsCore/componentsCore.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="bolt-components" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/bolt-components/dist/bolt-components.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="components" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/components/components.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="bolt-main" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/bolt-main/app/bolt-main-prod.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="TweenMax" src="https://static.parastorage.com/unpkg/gsap@2.0.2/src/minified/TweenMax.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="santa-animations" src="https://static.parastorage.com/unpkg/santa-animations@1.135.0/dist/santa-animations.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ScrollToPlugin" src="https://static.parastorage.com/unpkg/gsap@2.0.2/src/minified/plugins/ScrollToPlugin.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="wix-ui-santa/viewerComponentService.bundle" src="https://static.parastorage.com/unpkg/wix-ui-santa@1.0.797/dist/statics/viewerComponentService.bundle.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="linkBar" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/linkBar/linkBar.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="stripColumnsContainer" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/stripColumnsContainer/stripColumnsContainer.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mediaContainer" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/mediaContainer/mediaContainer.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="xss" src="https://static.parastorage.com/unpkg/xss@0.2.12/dist/xss.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="color" src="https://static.parastorage.com/unpkg/santa-external-modules@1.312.0/color-convert/0.2.0/color.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="contactForm" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/contactForm/contactForm.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="googleMap" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/googleMap/googleMap.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="formCommon" src="https://static.parastorage.com/services/wix-bolt/1.2344.0/node_modules/wix-santa/dist/packages-bin/formCommon/formCommon.min.js" crossorigin="anonymous"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="promote-analytics-adapter" src="https://static.parastorage.com/services/promote-analytics-adapter/2.71.0/analytics-event-adapter.bundle.min.js" crossorigin="anonymous"></script>
    </head>
    <body class="" data-js-loaded="true" style="">
-      <script type="text/javascript">
-         var htmlClassList = document.documentElement.classList;
-         
-         
-         
-         
-         var clientSideRender = false;
-         
-         
-         
-      </script>
+      <style>
+        body{ overflow-x: hidden;}
+      </style>
       <div id="SITE_CONTAINER">
       <style type="text/css" data-styleid="uploadedFonts"></style>
       <div>
