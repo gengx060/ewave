@@ -1650,6 +1650,11 @@
                 window.location = './pcsoftware.html';
             });
 
+        $( "#comp-juumgqclform-wrapper" ).submit(function( event ) {
+           window.location.href = ('mailto:info@EnchantedWave.com?'+$( this ).serialize());
+          console.log('mailto:info@EnchantedWave.com?'+$( this ).serialize());
+          event.preventDefault();
+        })
       </script>
    </body>
 </html>
